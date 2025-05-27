@@ -1,23 +1,30 @@
 # Simple Raspberry Pi Camera Server
 
-A lightweight web-based camera viewer for Raspberry Pi. This implementation uses a bash script to capture images from the Raspberry Pi camera module and serves them via a simple HTTP server.
+A lightweight web-based camera viewer for Raspberry Pi. This implementation uses a bash script to capture images from
+the Raspberry Pi camera module and serves them via a simple HTTP server.
+
+**Perfect for home monitoring:** If you live in a multi-room or multi-floor house/apartment and want to keep an eye on
+pets, children, or elderly family members in different rooms, this project offers a simple solution. Just place a
+Raspberry Pi with a camera module in any room you want to monitor, run this software, and you can check in from any
+device on your home network. It's an affordable, privacy-focused alternative to commercial monitoring cameras - ideal
+for watching sleeping babies, pets while you're in another room, or checking if your 3D printer has finished its job.
 
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Usage](#usage)
-  - [Starting the Camera Server](#starting-the-camera-server)
-  - [Accessing the Camera Feed](#accessing-the-camera-feed)
-  - [Stopping the Camera Server](#stopping-the-camera-server)
+    - [Starting the Camera Server](#starting-the-camera-server)
+    - [Accessing the Camera Feed](#accessing-the-camera-feed)
+    - [Stopping the Camera Server](#stopping-the-camera-server)
 - [Configuration](#configuration)
 - [Files](#files)
 - [Troubleshooting](#troubleshooting)
-  - [Camera Not Working](#camera-not-working)
-  - [Web Server Not Starting](#web-server-not-starting)
+    - [Camera Not Working](#camera-not-working)
+    - [Web Server Not Starting](#web-server-not-starting)
 - [Automatic Startup with Crontab](#automatic-startup-with-crontab)
-  - [Stopping the Automatic Startup](#stopping-the-automatic-startup)
-  - [Troubleshooting Automatic Startup](#troubleshooting-automatic-startup)
+    - [Stopping the Automatic Startup](#stopping-the-automatic-startup)
+    - [Troubleshooting Automatic Startup](#troubleshooting-automatic-startup)
 - [License](#license)
 
 ## Prerequisites
@@ -53,6 +60,7 @@ The easiest way to start everything is to use the provided startup script:
 ```
 
 This will:
+
 - Start the camera capture process
 - Start the web server
 - Display the URL where you can view the camera feed
@@ -69,7 +77,8 @@ The page will automatically refresh with a new image every few seconds.
 
 ### Stopping the Camera Server
 
-To stop both the camera capture and web server, press `Ctrl+C` in the terminal where you started the `start_camera_server.sh` script.
+To stop both the camera capture and web server, press `Ctrl+C` in the terminal where you started the
+`start_camera_server.sh` script.
 
 ## Configuration
 
@@ -88,6 +97,7 @@ You can modify the following settings in the `capture.sh` file:
 - `index.html`: Web page that displays the camera feed
 - `web_assets/styles.css`: Stylesheet for the web page
 - `web_assets/camera.js`: JavaScript code for updating the camera feed
+
 ## Troubleshooting
 
 ### Camera Not Working
@@ -111,6 +121,7 @@ You can modify the following settings in the `capture.sh` file:
    ```bash
    cat server.log
    ```
+
 ## Automatic Startup with Crontab
 
 You can configure the camera server to start automatically when your Raspberry Pi boots up by using crontab:
@@ -124,7 +135,7 @@ You can configure the camera server to start automatically when your Raspberry P
    ```
    @reboot cd /path/to/RpiCamera/simple && ./start_camera_server.sh >> /home/pi/camera_startup.log 2>&1
    ```
-   
+
    Replace `/path/to/RpiCamera/simple` with the actual path to the directory containing the scripts.
 
 3. Save and exit the editor (in nano, press Ctrl+O, then Enter, then Ctrl+X)
@@ -138,7 +149,7 @@ You can configure the camera server to start automatically when your Raspberry P
    ```bash
    ps aux | grep capture.sh
    ```
-   
+
    You should see the capture.sh process in the list.
 
 6. You can also check the startup log for any errors:
@@ -186,4 +197,5 @@ If the camera server doesn't start automatically:
    You should see `supported=1 detected=1`
 
 ## License
+
 This project is open source and available under the [MIT License](../LICENSE).
