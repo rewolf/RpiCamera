@@ -2,6 +2,24 @@
 
 A lightweight web-based camera viewer for Raspberry Pi. This implementation uses a bash script to capture images from the Raspberry Pi camera module and serves them via a simple HTTP server.
 
+## Table of Contents
+
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Starting the Camera Server](#starting-the-camera-server)
+  - [Accessing the Camera Feed](#accessing-the-camera-feed)
+  - [Stopping the Camera Server](#stopping-the-camera-server)
+- [Configuration](#configuration)
+- [Files](#files)
+- [Troubleshooting](#troubleshooting)
+  - [Camera Not Working](#camera-not-working)
+  - [Web Server Not Starting](#web-server-not-starting)
+- [Automatic Startup with Crontab](#automatic-startup-with-crontab)
+  - [Stopping the Automatic Startup](#stopping-the-automatic-startup)
+  - [Troubleshooting Automatic Startup](#troubleshooting-automatic-startup)
+- [License](#license)
+
 ## Prerequisites
 
 - Raspberry Pi (any model) with Raspberry Pi OS installed
@@ -93,7 +111,79 @@ You can modify the following settings in the `capture.sh` file:
    ```bash
    cat server.log
    ```
+## Automatic Startup with Crontab
+
+You can configure the camera server to start automatically when your Raspberry Pi boots up by using crontab:
+
+1. Open the crontab editor:
+   ```bash
+   crontab -e
+   ```
+
+2. Add the following line to run the camera server at boot:
+   ```
+   @reboot cd /path/to/RpiCamera/simple && ./start_camera_server.sh >> /home/pi/camera_startup.log 2>&1
+   ```
+   
+   Replace `/path/to/RpiCamera/simple` with the actual path to the directory containing the scripts.
+
+3. Save and exit the editor (in nano, press Ctrl+O, then Enter, then Ctrl+X)
+
+4. Reboot your Raspberry Pi to test the automatic startup:
+   ```bash
+   sudo reboot
+   ```
+
+5. After the Pi reboots, you can check if the camera server is running:
+   ```bash
+   ps aux | grep capture.sh
+   ```
+   
+   You should see the capture.sh process in the list.
+
+6. You can also check the startup log for any errors:
+   ```bash
+   cat /home/pi/camera_startup.log
+   ```
+
+### Stopping the Automatic Startup
+
+If you want to disable the automatic startup:
+
+1. Open the crontab editor:
+   ```bash
+   crontab -e
+   ```
+
+2. Find and remove or comment out (by adding a # at the beginning) the line that starts with `@reboot`
+
+3. Save and exit the editor
+
+### Troubleshooting Automatic Startup
+
+If the camera server doesn't start automatically:
+
+1. Check the startup log:
+   ```bash
+   cat /home/pi/camera_startup.log
+   ```
+
+2. Make sure all scripts have execute permissions:
+   ```bash
+   chmod +x capture.sh server.sh start_camera_server.sh
+   ```
+
+3. Try running the start script manually to see if there are any errors:
+   ```bash
+   cd /path/to/RpiCamera/simple
+   ./start_camera_server.sh
+   ```
+
+4. Check if the camera module is enabled:
+   ```bash
+   vcgencmd get_camera
+   ```
+   You should see `supported=1 detected=1`
 
 ## License
-
 This project is open source and available under the [MIT License](../LICENSE).
