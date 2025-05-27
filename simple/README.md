@@ -19,6 +19,7 @@ for watching sleeping babies, pets while you're in another room, or checking if 
     - [Stopping the Camera Server](#stopping-the-camera-server)
 - [Configuration](#configuration)
 - [Files](#files)
+- [How it Works](#how-it-works)
 - [Troubleshooting](#troubleshooting)
     - [Camera Not Working](#camera-not-working)
     - [Web Server Not Starting](#web-server-not-starting)
@@ -97,6 +98,18 @@ You can modify the following settings in the `capture.sh` file:
 - `index.html`: Web page that displays the camera feed
 - `web_assets/styles.css`: Stylesheet for the web page
 - `web_assets/camera.js`: JavaScript code for updating the camera feed
+
+## How it Works
+
+The Raspberry Pi Camera Server uses a simple but effective architecture:
+
+1. A camera capture script continuously takes pictures using the Raspberry Pi camera module
+2. A web server makes these images available over your local network
+3. A web page automatically refreshes to show the latest image
+
+The system is designed to be lightweight and reliable, using minimal resources while providing near real-time monitoring.
+
+For a detailed explanation of the system architecture with diagrams, see the [ARCHITECTURE.md](ARCHITECTURE.md) document.
 
 ## Troubleshooting
 
