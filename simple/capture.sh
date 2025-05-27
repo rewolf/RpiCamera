@@ -67,8 +67,9 @@ while true; do
   fi
 
   # Update the symbolic link to point to the new file
-  # Changed from "${IMAGE_DIR}/../current.jpg" to "${IMAGE_DIR}/current.jpg"
-  ln -sf "$FINAL_FILE" "${IMAGE_DIR}/current.jpg"
+  pushd "$IMAGE_DIR"
+  ln -sf "$(basename "$FINAL_FILE")" "current.jpg"
+  popd
 
   # Clean up temporary files (in case they still exist)
   rm -f "$TEMP_FILE"
