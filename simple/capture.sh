@@ -55,20 +55,14 @@ while true; do
     continue
   fi
 
-  # Only rotate if ROTATION is not 0
-  if [ "$ROTATION" -ne 0 ]; then
-    # Rotate the image
-    convert "$SNAPSHOT_FILE" -rotate ${ROTATION} "$FINAL_FILE"
+  # Rotate the image
+  convert "$SNAPSHOT_FILE" -rotate ${ROTATION} "$FINAL_FILE"
 
-    # Check if rotation was successful
-    if [ ! -f "$FINAL_FILE" ]; then
-      echo "Error: Failed to rotate image"
-      sleep 2
-      continue
-    fi
-  else
-    # No rotation needed, just copy the file
-    cp "$SNAPSHOT_FILE" "$FINAL_FILE"
+  # Check if rotation was successful
+  if [ ! -f "$FINAL_FILE" ]; then
+    echo "Error: Failed to rotate image"
+    sleep 2
+    continue
   fi
 
   # Update the symbolic link to point to the new file
