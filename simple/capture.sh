@@ -5,6 +5,7 @@ QUALITY=90
 WIDTH=720
 HEIGHT=1280
 ROTATION=90  # Set to 0 to disable rotation
+TEMP_PREFIX="temp_"  # Prefix for temporary files
 
 # Directory to store images
 IMAGE_DIR="./images"
@@ -12,6 +13,9 @@ mkdir -p "$IMAGE_DIR"
 
 # Track the previous file for deletion
 PREV_FILE=""
+
+# Clean up any leftover temp files from previous runs
+find "$IMAGE_DIR" -name "${TEMP_PREFIX}*.jpg" -delete
 
 # Start libcamera-still in signal mode
 echo "Starting libcamera-still in signal mode..."
@@ -29,7 +33,7 @@ echo "Camera ready. Beginning capture loop..."
 while true; do
   # Generate timestamp for filename
   TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-  TEMP_FILE="${IMAGE_DIR}/temp_${TIMESTAMP}.jpg"
+  TEMP_FILE="${IMAGE_DIR}/${TEMP_PREFIX}${TIMESTAMP}.jpg"
   FINAL_FILE="${IMAGE_DIR}/camera_${TIMESTAMP}.jpg"
 
   echo "Capturing new image: $FINAL_FILE"
@@ -67,11 +71,11 @@ while true; do
   fi
 
   # Update the symbolic link to point to the new file
-  pushd "$IMAGE_DIR"
+  pushd "$IMAGE_DIR" > /dev/null
   ln -sf "$(basename "$FINAL_FILE")" "current.jpg"
-  popd
+  popd > /dev/null
 
-  # Clean up temporary files (in case they still exist)
+  # Clean up temporary files
   rm -f "$TEMP_FILE"
 
   # Delete the previous file if it exists
