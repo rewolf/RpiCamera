@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Get the directory where the script is located and change to it
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+cd "$SCRIPT_DIR"
+
 # Configuration
 CAMERA_LOG="camera.log"
 SERVER_LOG="server.log"

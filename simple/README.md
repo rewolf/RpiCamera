@@ -107,9 +107,11 @@ The Raspberry Pi Camera Server uses a simple but effective architecture:
 2. A web server makes these images available over your local network
 3. A web page automatically refreshes to show the latest image
 
-The system is designed to be lightweight and reliable, using minimal resources while providing near real-time monitoring.
+The system is designed to be lightweight and reliable, using minimal resources while providing near real-time
+monitoring.
 
-For a detailed explanation of the system architecture with diagrams, see the [ARCHITECTURE.md](ARCHITECTURE.md) document.
+For a detailed explanation of the system architecture with diagrams, see the [ARCHITECTURE.md](ARCHITECTURE.md)
+document.
 
 ## Troubleshooting
 
@@ -150,6 +152,9 @@ You can configure the camera server to start automatically when your Raspberry P
    ```
 
    Replace `/path/to/RpiCamera/simple` with the actual path to the directory containing the scripts.
+
+   Note: Even though the script will detect its own directory, explicitly changing to the directory in the crontab entry
+   is recommended for clarity and as a best practice.
 
 3. Save and exit the editor (in nano, press Ctrl+O, then Enter, then Ctrl+X)
 
@@ -208,6 +213,11 @@ If the camera server doesn't start automatically:
    vcgencmd get_camera
    ```
    You should see `supported=1 detected=1`
+
+5. If you're still having issues, you can try adding a delay before starting the server:
+   ```
+   @reboot sleep 30 && cd /path/to/RpiCamera/simple && ./start_camera_server.sh >> /home/pi/camera_startup.log 2>&1
+   ```
 
 ## License
 
